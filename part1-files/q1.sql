@@ -21,7 +21,7 @@ DROP VIEW IF EXISTS intermediate_step CASCADE;
 
 -- find # of grades that are between 80 and 100 for each assignment
 CREATE VIEW NUM_80_100(
-	select count(AssignmentGroup.group_id)
+	select count(AssignmentGroup.grade)
 	from Grade outer join AssignmentGroup on group_id
 	where Grade.grade >= 80 and Grade.grade <= 100
 	group by AssignmentGroup.assignment_id;
@@ -29,7 +29,7 @@ CREATE VIEW NUM_80_100(
 
 -- find # of grades that are between 60 and 79 for each assignment
 CREATE VIEW NUM_60_79(
-	select count(AssignmentGroup.group_id)
+	select count(AssignmentGroup.grade)
 	from Grade outer join AssignmentGroup on group_id
 	where Grade.grade >= 60 and Grade.grade <= 79
 	group by AssignmentGroup.assignment_id;
@@ -37,7 +37,7 @@ CREATE VIEW NUM_60_79(
 
 -- find # of grades that are between 50 and 59 for each assignment
 CREATE VIEW NUM_50_59(
-	select count(AssignmentGroup.group_id)
+	select count(AssignmentGroup.grade)
 	from Grade outer join AssignmentGroup on group_id
 	where Grade.grade >= 50 and Grade.grade <= 59
 	group by AssignmentGroup.assignment_id;
@@ -45,7 +45,7 @@ CREATE VIEW NUM_50_59(
 
 -- find # of grades that are between 0 and 49 for each assignment
 CREATE VIEW NUM_0_49(
-	select count(AssignmentGroup.group_id)
+	select count(AssignmentGroup.grade)
 	from Grade outer join AssignmentGroup on group_id
 	where Grade.grade >= 0 and Grade.grade <= 49
 	group by AssignmentGroup.assignment_id;
