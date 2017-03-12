@@ -53,12 +53,12 @@ INSERT INTO Membership VALUES ('s4', 4);
 
 -- sub id, group id
 INSERT INTO Submissions VALUES (11, 'A1.pdf', 's1', 1, '2017-02-08 19:59');
-INSERT INTO Submissions VALUES (41, 'A1.pdf', 's2', 1, '2017-02-06 19:59');
-INSERT INTO Submissions VALUES (21, 'A1.pdf', 's1', 1, '2017-02-05 19:59');
-INSERT INTO Submissions VALUES (31, 'A1.pdf', 's2', 1, '2017-02-04 19:59');
+INSERT INTO Submissions VALUES (21, 'A1.pdf', 's2', 1, '2017-02-06 19:59');
+INSERT INTO Submissions VALUES (31, 'A1.pdf', 's1', 1, '2017-02-05 19:59');
+INSERT INTO Submissions VALUES (41, 'A1.pdf', 's2', 1, '2017-02-04 19:59');
 INSERT INTO Submissions VALUES (51, 'A1.pdf', 's1', 1, '2017-02-03 19:59');
-INSERT INTO Submissions VALUES (31, 'A1.pdf', 's3', 4, '2017-02-04 19:59');
-INSERT INTO Submissions VALUES (51, 'A1.pdf', 's4', 4, '2017-02-03 19:59');
+INSERT INTO Submissions VALUES (61, 'A1.pdf', 's3', 4, '2017-02-04 19:59');
+INSERT INTO Submissions VALUES (71, 'A1.pdf', 's4', 4, '2017-02-03 19:59');
 
 -- group id, username
 INSERT INTO Grader VALUES (1, 't1');--
