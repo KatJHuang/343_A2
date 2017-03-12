@@ -80,7 +80,7 @@ where assignment_percent < 50
 group by assignment_id;
 
 -- Final answer.
-INSERT INTO q1 (select assignment_id, average_mark_percent, num_80_100, num_60_79, num_50_59, num_0_49
+INSERT INTO q1 (select Assignment.assignment_id, average_mark_percent, num_80_100, num_60_79, num_50_59, num_0_49
 from (assignment_avg_grade natural join number_80to100 natural join num_60_79 
 natural join number_50to59 natural join number_0to49) as assignment_1 FULL join Assignment 
 on Assignment.assignment_id = assignment_1.assignment_id);
