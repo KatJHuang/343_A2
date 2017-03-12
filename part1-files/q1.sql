@@ -82,11 +82,10 @@ group by assignment_id;
 -- Final answer.
 INSERT INTO q1 (
 	select Assignment.assignment_id, average_mark_percent, number_80_100, number_60_79, number_50_59, number_0_49
-	from (assignment_avg_grade natural join number_80to100 
-	full join number_60to79 on number_80to100.assignment_id = number_60to79.assignment_id
-	full join number_50to59 on number_80to100.assignment_id = number_50to59.assignment_id
-	full join number_0to49 on number_80to100.assignment_id = number_0to49.assignment_id)
-	as assignment_1 FULL join Assignment 
-	on Assignment.assignment_id = number_80to100.assignment_id
+	from assignment_avg_grade natural join number_80to100 
+		full join number_60to79 on number_80to100.assignment_id = number_60to79.assignment_id
+		full join number_50to59 on number_80to100.assignment_id = number_50to59.assignment_id
+		full join number_0to49 on number_80to100.assignment_id = number_0to49.assignment_id
+		full join Assignment on Assignment.assignment_id = number_80to100.assignment_id
 );
 	-- put a final query here so that its results will go into the table.
