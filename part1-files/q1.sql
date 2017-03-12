@@ -26,7 +26,7 @@ DROP VIEW IF EXISTS number_0to49 CASCADE;
 
 -- Add a column for percentage total grade of each group in each assignment
 create view real_grade as 
-select assignment_id, rubric_id, group_id, (grade*weight/out_of) as r_grade
+select assignment_id, rubric_id, group_id, (grade*weight/out_of*100) as r_grade
 from RubricItem natural join Grade;
 
 -- **************************************************
