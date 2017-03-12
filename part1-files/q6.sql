@@ -48,6 +48,7 @@ create view lastSubmission as
 -- Final answer.
 INSERT INTO q6 
 	-- put a final query here so that its results will go into the table.
-	select group_id, f_file, first_sub, f_person, l_file, last_sub, l_person, last_sub-first_sub 
-	from Assignment natural join firstSubmission natural join lastSubmission;
+	select A1Submissions.group_id, f_file, first_sub, f_person, l_file, last_sub, l_person, last_sub-first_sub 
+	from A1Submissions join (firstSubmission natural join lastSubmission) on A1Submissions.submission_date = firstSubmission.first_sub 
+		and A1Submissions.group_id = firstSubmission.group_id;
 	
