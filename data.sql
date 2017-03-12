@@ -15,8 +15,12 @@ TRUNCATE TABLE MarkusUser CASCADE;
 -- Now insert data from scratch.
 
 INSERT INTO MarkusUser VALUES ('i1', 'iln1', 'ifn1', 'instructor');
+
 INSERT INTO MarkusUser VALUES ('s1', 'sln1', 'sfn1', 'student');
 INSERT INTO MarkusUser VALUES ('s2', 'sln2', 'sfn2', 'student'); --
+INSERT INTO MarkusUser VALUES ('s3', 'sln3', 'sfn3', 'student');
+INSERT INTO MarkusUser VALUES ('s4', 'sln4', 'sfn4', 'student'); --
+
 INSERT INTO MarkusUser VALUES ('t1', 'tln1', 'tfn1', 'TA');
 INSERT INTO MarkusUser VALUES ('t2', 'tln2', 'tln2', 'TA');
 INSERT INTO MarkusUser VALUES ('t3', 'tln3', 'tln3', 'TA');
@@ -33,27 +37,29 @@ INSERT INTO Required VALUES (1000, 'A1.pdf');
 
 -- group id, assignment id
 INSERT INTO AssignmentGroup VALUES (1, 1000, 'repo_url');--
+INSERT INTO AssignmentGroup VALUES (4, 1000, 'repo_url');--
 INSERT INTO AssignmentGroup VALUES (2, 2000, 'repo_url');
 INSERT INTO AssignmentGroup VALUES (3, 3000, 'repo_url');
-INSERT INTO AssignmentGroup VALUES (4, 4000, 'repo_url');
 
 -- student, group
 INSERT INTO Membership VALUES ('s1', 1);
 INSERT INTO Membership VALUES ('s2', 1);--
 INSERT INTO Membership VALUES ('s1', 2);
 INSERT INTO Membership VALUES ('s2', 2);--
-INSERT INTO Membership VALUES ('s1', 3);
-INSERT INTO Membership VALUES ('s2', 3);
-INSERT INTO Membership VALUES ('s1', 4);
+INSERT INTO Membership VALUES ('s3', 3);
+INSERT INTO Membership VALUES ('s4', 3);
 INSERT INTO Membership VALUES ('s2', 4);
+INSERT INTO Membership VALUES ('s4', 4);
 
-INSERT INTO Submissions VALUES (3000, 'A1.pdf', 's1', 2000, '2017-02-08 19:59');
+-- sub id, group id
+INSERT INTO Submissions VALUES (11, 'A1.pdf', 's1', 1, '2017-02-08 19:59');
+INSERT INTO Submissions VALUES (41, 'A1.pdf', 's4', 1, '2017-02-06 19:59');
 
 -- group id, username
 INSERT INTO Grader VALUES (1, 't1');--
-INSERT INTO Grader VALUES (2, 't1');--
+INSERT INTO Grader VALUES (2, 't2');--
 INSERT INTO Grader VALUES (3, 't1');--
-INSERT INTO Grader VALUES (4, 't2');
+INSERT INTO Grader VALUES (4, 't4');
 
 INSERT INTO RubricItem VALUES (4010, 1000, 'style', 4, 0.25);
 INSERT INTO RubricItem VALUES (4011, 1000, 'tester', 12, 0.75);--
