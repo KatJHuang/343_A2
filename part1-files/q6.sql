@@ -28,21 +28,21 @@ create view A1Submissions as
 	where description = 'a1';
 
 create view first as
-	select group_id, min(submission_date) as first_sub
+	select group_id, min(submission_date) as submission_date
 	from A1Submissions
 	group by group_id;
 
 create view firstSubmission as 
-	select group_id, file_name as f_file, username as f_person, first_sub
+	select group_id, file_name as f_file, username as f_person, submission_date as first_sub
 	from A1Submissions natural join first;
 
 create view last as
-	select group_id, max(submission_date) as last_sub
+	select group_id, max(submission_date) as submission_date
 	from A1Submissions
 	group by group_id;
 
 create view lastSubmission as
-	select group_id, file_name as l_file, username as l_person, last_sub
+	select group_id, file_name as l_file, username as l_person, submission_date as last_sub
 	from A1Submissions natural join last;
 
 -- Final answer.
