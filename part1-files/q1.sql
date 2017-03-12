@@ -87,6 +87,6 @@ INSERT INTO q1 (
 	full join number_50to59 on number_80to100.assignment_id = number_50to59.assignment_id
 	full join number_0to49 on number_80to100.assignment_id = number_0to49.assignment_id)
 	as assignment_1 FULL join Assignment 
-	on Assignment.assignment_id = assignment_1.assignment_id
+	on Assignment.assignment_id = number_80to100.assignment_id
 );
 	-- put a final query here so that its results will go into the table.
