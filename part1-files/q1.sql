@@ -15,8 +15,15 @@ CREATE TABLE q1 (
 
 -- You may find it convenient to do this for each of the views
 -- that define your intermediate steps.  (But give them better names!)
-DROP VIEW IF EXISTS intermediate_step CASCADE;
-
+DROP VIEW IF EXISTS real_grade CASCADE;
+DROP VIEW IF EXISTS real_sum_grade CASCADE;
+DROP VIEW IF EXISTS group_count_per_assignment CASCADE;
+DROP VIEW IF EXISTS assignment_avg_grade CASCADE;
+DROP VIEW IF EXISTS real_grade_each_group CASCADE;
+DROP VIEW IF EXISTS number_80to100 CASCADE;
+DROP VIEW IF EXISTS number_60to79 CASCADE;
+DROP VIEW IF EXISTS number_50to59 CASCADE;
+DROP VIEW IF EXISTS number_0to49 CASCADE;
 -- Define views for your intermediate steps here.
 
 -- Add a column for percentage total grade of each group in each assignment
@@ -76,7 +83,7 @@ from (assignment_avg_grade natural join number_80to100 natural join num_60_79
 natural join number_50to59 natural join number_0to49) as assignment_1 FULL join Assignment 
 on Assignment.assignment_id = assignment_1.assignment_id);
 	-- put a final query here so that its results will go into the table.
-=======
+
 -- find # of grades that are between 80 and 100 for each assignment
 CREATE VIEW NUM_80_100 AS(
 	select count(Grade.grade)
