@@ -15,7 +15,9 @@ CREATE TABLE q4 (
 
 -- You may find it convenient to do this for each of the views
 -- that define your intermediate steps.  (But give them better names!)
-DROP VIEW IF EXISTS intermediate_step CASCADE;
+DROP VIEW IF EXISTS partialMarks CASCADE;
+DROP VIEW IF EXISTS groupMark CASCADE;
+DROP VIEW IF EXISTS gradeAssignment CASCADE;
 
 -- for calculating marks
 create view partialMarks as
