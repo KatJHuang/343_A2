@@ -56,31 +56,31 @@ from real_grade
 group by assignment_id, group_id;
 
 create view number_80to100 as
-select assignment_id, count(group_id) as num_80_100
+select assignment_id, count(group_id) as number_80_100
 from real_grade_each_group
 where assignment_percent >=80
 group by assignment_id;
 
 create view number_60to79 as
-select assignment_id, count(group_id) as num_60_79
+select assignment_id, count(group_id) as number_60_79
 from real_grade_each_group
 where assignment_percent >=60 and assignment_percent <80
 group by assignment_id;
 
 create view number_50to59 as
-select assignment_id, count(group_id) as num_50_59
+select assignment_id, count(group_id) as number_50_59
 from real_grade_each_group
 where assignment_percent >=50 and assignment_percent < 60
 group by assignment_id;
 
 create view number_0to49 as
-select assignment_id, count(group_id) as num_0_49
+select assignment_id, count(group_id) as number_0_49
 from real_grade_each_group
 where assignment_percent < 50
 group by assignment_id;
 
 -- Final answer.
-INSERT INTO q1 (select Assignment.assignment_id, average_mark_percent, num_80_100, num_60_79, num_50_59, num_0_49
+INSERT INTO q1 (select Assignment.assignment_id, average_mark_percent, number_80_100, number_60_79, number_50_59, number_0_49
 from (assignment_avg_grade natural join number_80to100 natural join num_60_79 
 natural join number_50to59 natural join number_0to49) as assignment_1 FULL join Assignment 
 on Assignment.assignment_id = assignment_1.assignment_id);
