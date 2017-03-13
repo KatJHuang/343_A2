@@ -29,18 +29,43 @@ INSERT INTO MarkusUser VALUES ('t4', 'tln4', 'tln4', 'TA');
 -- assn id, descp, due, min, max
 INSERT INTO Assignment VALUES (1, 'a1', '2017-01-08 20:00', 1, 2); --
 INSERT INTO Assignment VALUES (2, 'a2', '2017-02-08 20:00', 1, 2);
-INSERT INTO Assignment VALUES (3, 'a3', '2017-03-08 20:00', 1, 2);
-INSERT INTO Assignment VALUES (4, 'a4', '2017-04-08 20:00', 1, 2);
-INSERT INTO Assignment VALUES (5, 'a5', '2017-05-08 20:00', 1, 2);
-INSERT INTO Assignment VALUES (6, 'a6', '2017-05-08 20:00', 1, 2);
+--INSERT INTO Assignment VALUES (3, 'a3', '2017-03-08 20:00', 1, 2);
+--INSERT INTO Assignment VALUES (4, 'a4', '2017-04-08 20:00', 1, 2);
+--INSERT INTO Assignment VALUES (5, 'a5', '2017-05-08 20:00', 1, 2);
+--INSERT INTO Assignment VALUES (6, 'a6', '2017-05-08 20:00', 1, 2);
 
 INSERT INTO Required VALUES (1, 'A1.pdf');
 
 -- group id, assignment id
-INSERT INTO AssignmentGroup VALUES (1, 1, 'repo_url');--
-INSERT INTO AssignmentGroup VALUES (4, 1, 'repo_url');--
-INSERT INTO AssignmentGroup VALUES (2, 2, 'repo_url');
-INSERT INTO AssignmentGroup VALUES (3, 2, 'repo_url'),(5, 3, 'repo_url');
+select setval('AssignmentGroup_group_id_seq', 1,false);
+INSERT INTO AssignmentGroup (assignment_id,repo) VALUES 
+(1, 'repo_url'),
+(1, 'repo_url'),
+(1, 'repo_url'),
+(1, 'repo_url'),
+(1, 'repo_url'),
+(1, 'repo_url'),
+(1, 'repo_url'),
+(1, 'repo_url'),
+(1, 'repo_url'),
+(1, 'repo_url'),
+(2, 'repo_url'),
+(2, 'repo_url'),
+(2, 'repo_url'),
+(2, 'repo_url'),
+(2, 'repo_url'),
+(2, 'repo_url'),
+(2, 'repo_url'),
+(2, 'repo_url'),
+(2, 'repo_url'),
+(2, 'repo_url'),
+(2, 'repo_url'),
+(2, 'repo_url'),
+(2, 'repo_url'),
+(2, 'repo_url'),
+(2, 'repo_url'),
+(2, 'repo_url')
+;
 
 -- student, group
 INSERT INTO Membership VALUES ('A', 1),('B',1),('C',2),('D',3),('E',4);
@@ -55,25 +80,72 @@ INSERT INTO Submissions VALUES (61, 'A1.pdf', 'C', 4, '2017-02-04 19:59');
 INSERT INTO Submissions VALUES (71, 'A1.pdf', 'D', 4, '2017-02-03 19:59');
 
 -- group id, username
-INSERT INTO Grader VALUES (1, 't1');--
-INSERT INTO Grader VALUES (2, 't2');--
-INSERT INTO Grader VALUES (3, 't1');--
-INSERT INTO Grader VALUES (4, 't4');
+INSERT INTO Grader VALUES 
+(1, 't1'),
+(2, 't1'),
+(3, 't1'),
+(4, 't1'),
+(5, 't1'),
+(6, 't1'),
+(7, 't1'),
+(8, 't1'),
+(9, 't1'),
+(10, 't1'),
+(11, 't1'),
+(12, 't1'),
+(13, 't1'),
+(14, 't1'),
+(15, 't1'),
+(16, 't1'),
+(17, 't1'),
+(18, 't1'),
+(19, 't1'),
+(20, 't1'),
+(21, 't2'),
+(22, 't2'),
+(23, 't2'),
+(24, 't2'),
+(25, 't2')
+;
 
 INSERT INTO RubricItem VALUES (4010, 1, 'style', 4, 0.25);
 INSERT INTO RubricItem VALUES (4011, 1, 'tester', 12, 0.75);--
 INSERT INTO RubricItem VALUES (4020, 2, 'style', 4, 0.25);
 INSERT INTO RubricItem VALUES (4021, 2, 'tester', 12, 0.75);
-INSERT INTO RubricItem VALUES (4030, 3, 'style', 4, 0.25);
-INSERT INTO RubricItem VALUES (4031, 3, 'tester', 12, 0.75);
+--INSERT INTO RubricItem VALUES (4030, 3, 'style', 4, 0.25);
+--INSERT INTO RubricItem VALUES (4031, 3, 'tester', 12, 0.75);
 
-INSERT INTO Grade VALUES (1, 4010, 3);
-INSERT INTO Grade VALUES (1, 4011, 9);--
+INSERT INTO Grade VALUES (1, 4010, 2);
+INSERT INTO Grade VALUES (1, 4011, 4);
+INSERT INTO Grade VALUES (4, 4010, 4);
+INSERT INTO Grade VALUES (4, 4011, 12);--
 INSERT INTO Grade VALUES (2, 4020, 2);
 INSERT INTO Grade VALUES (2, 4021, 8);
-INSERT INTO Grade VALUES (3, 4030, 1);
-INSERT INTO Grade VALUES (3, 4031, 7);
+--INSERT INTO Grade VALUES (3, 4030, 3);
+--INSERT INTO Grade VALUES (3, 4031, 7);
 
-INSERT INTO Result VALUES (2, 8, true);
-INSERT INTO Result VALUES (3, 12, true);
-INSERT INTO Result VALUES (4, 7, true), (1, 5, true);
+INSERT INTO Result VALUES 
+(1, 5, true),
+(2, 6, true),
+(3, 6, true), 
+(4, 5, true),
+(5, 5, true),
+(6, 6, true),
+(7, 6, true),
+(8, 5, true),
+(9, 6, true),
+(10, 7, true),
+(11, 8, true),
+(12, 8, true),
+(13, 9, true),
+(14, 8, true),
+(15, 9, true),
+(16, 8, true),
+(17, 8, true),
+(18, 9, true),
+(19, 8, true),
+(20, 9, true),
+(21, 8, true),
+(22, 3, true),
+(23, 8, true),
+(24, 9, true);

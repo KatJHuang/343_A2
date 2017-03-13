@@ -22,12 +22,21 @@ DROP VIEW IF EXISTS number_80to100 CASCADE;
 DROP VIEW IF EXISTS number_60to79 CASCADE;
 DROP VIEW IF EXISTS number_50to59 CASCADE;
 DROP VIEW IF EXISTS number_0to49 CASCADE;
+DROP VIEW IF EXISTS all_assignments CASCADE;
+DROP VIEW IF EXISTS assignment_outof CASCADE;
 -- Define views for your intermediate steps here.
+
+create view all_assignments as
+select assignment_id from Assignment;
+
+create view assignment_outof as
+select assignment_id, sum(out_of * weight) as assignment_outof
+from RubricItem group by assignment_id;
 
 -- Add a column for percentage total grade of each group in each assignment
 create view real_grade as 
-select assignment_id, rubric_id, group_id, (grade*weight/out_of*100) as r_grade
-from RubricItem natural join Grade;
+select assignment_id, group_id, mark * 100/assignment_outof as r_grade
+from AssignmentGroup natural join assignment_outof natural join Result;
 
 -- **************************************************
 --find the sum grade of each assignment
@@ -38,7 +47,7 @@ group by assignment_id;
 
 -- find the number of groups for each assignment
 create view group_count_per_assignment as 
-select assignment_id, count(group_id) as group_count 
+select assignment_id, count(distinct group_id) as group_count 
 from real_grade 
 group by assignment_id;
 
@@ -81,11 +90,13 @@ group by assignment_id;
 
 -- Final answer.
 INSERT INTO q1 (
-	select Assignment.assignment_id, average_mark_percent, number_80_100, number_60_79, number_50_59, number_0_49
-	from assignment_avg_grade natural join (number_80to100 
-			full join number_60to79 on number_80to100.assignment_id = number_60to79.assignment_id
-			full join number_50to59 on number_80to100.assignment_id = number_50to59.assignment_id
-			full join number_0to49 on number_80to100.assignment_id = number_0to49.assignment_id
-			full join Assignment on Assignment.assignment_id = number_80to100.assignment_id)
+	select Assignment.assignment_id, COALESCE(average_mark_percent,0), COALESCE(number_80_100,0),
+	COALESCE(number_60_79,0), COALESCE(number_50_59,0), COALESCE(number_0_49,0)
+	from assignment_avg_grade natural full join (number_80to100 
+			natural full join number_60to79 
+			natural full join number_50to59 
+			natural full join number_0to49 
+			natural full join Assignment )
+			natural full join all_assignments
 );
 	-- put a final query here so that its results will go into the table.

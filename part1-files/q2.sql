@@ -12,10 +12,20 @@ CREATE TABLE q2 (
 
 -- You may find it convenient to do this for each of the views
 -- that define your intermediate steps.  (But give them better names!)
+DROP VIEW IF EXISTS assignment_outof CASCADE;
+DROP VIEW IF EXISTS real_grade CASCADE;
 DROP VIEW IF EXISTS TA CASCADE;
 DROP VIEW IF EXISTS TAAssignment CASCADE;
 
-DROP VIEW IF EXISTS student CASCADE;
+DROP VIEW IF EXISTS TA_assg_group_mark CASCADE;
+DROP VIEW IF EXISTS valid_TA CASCADE;
+DROP VIEW IF EXISTS valid_TA_assg_group_mark CASCADE;
+DROP VIEW IF EXISTS valid_TA_assg_avg CASCADE;
+DROP VIEW IF EXISTS valid_TA_assg_avg_due CASCADE;
+DROP VIEW IF EXISTS TA_not_softer CASCADE;
+DROP VIEW IF EXISTS TA_softer CASCADE;
+DROP VIEW IF EXISTS ans CASCADE;
+/* DROP VIEW IF EXISTS student CASCADE;
 DROP VIEW IF EXISTS studentGroup CASCADE;
 
 DROP VIEW IF EXISTS partialMarks CASCADE;
@@ -28,30 +38,76 @@ DROP VIEW IF EXISTS seasoned CASCADE;
 
 DROP VIEW IF EXISTS seasonedMarking CASCADE;
 DROP VIEW IF EXISTS notSofter CASCADE;
-DROP VIEW IF EXISTS softer CASCADE;
+DROP VIEW IF EXISTS softer CASCADE; */
 
 
 
 -- Define views for your intermediate steps here.
+
+create view assignment_outof as
+select assignment_id, sum(out_of * weight) as assignment_outof
+from RubricItem group by assignment_id;
+
+create view real_grade as 
+select assignment_id, group_id, mark * 100/assignment_outof as r_grade
+from AssignmentGroup natural join assignment_outof natural join Result;
 
 -- find all the TAs
 create view TA as
 	select username 
 	from MarkusUser
 	where type = 'TA';
-
+/* 
 -- find all the students
 create view student as
 	select username 
 	from MarkusUser
 	where type = 'student';
-
+ */
 -- find the groups TAs have been assigned to
 create view TAAssignment as
 	select username, group_id
 	from TA natural join Grader;
 
-	-- find the groups TAs have been assigned to
+-- find the ta's group marks
+create view TA_assg_group_mark as
+select username, assignment_id, group_id, r_grade as mark
+from TAAssignment natural join real_grade natural full join Assignment;
+
+-- find the ta that has at least 10 grades for each assignment
+create view valid_TA as
+select username
+from TA_assg_group_mark group by assignment_id, username
+having count(group_id) >= 10;
+
+-- filter out the invalid ta
+create view valid_TA_assg_group_mark as
+select * from TA_assg_group_mark natural join valid_TA;
+
+create view valid_TA_assg_avg as
+select username, assignment_id, avg(mark) as mark
+from valid_TA_assg_group_mark group by assignment_id, username;
+
+create view valid_TA_assg_avg_due as 
+select username, assignment_id, due_date, mark
+from valid_TA_assg_avg natural join Assignment;
+
+create view TA_not_softer as
+select t1.username from valid_TA_assg_avg_due as t1 join valid_TA_assg_avg_due as t2 
+on t1.username = t2.username
+where t1.due_date > t2.due_date and t1.mark <= t2.mark;
+
+create view TA_softer as
+select username, avg(mark) as average_mark_all_assignments, max(mark) - min(mark) as mark_change_first_last
+from valid_TA_assg_avg 
+where username not in (select * from TA_not_softer)
+group by username;
+
+create view ans as
+select firstname || ' ' || surname as ta_name, average_mark_all_assignments, mark_change_first_last
+from TA_softer natural join MarkusUser;
+
+	/* -- find the groups TAs have been assigned to
 create view studentGroup as
 	select username, group_id
 	from student natural join Membership;
@@ -107,10 +163,8 @@ create view softer as
 	select username, assignment_id, due_date, mark
 	from seasonedMarking
 	where username not in (select username from notSofter); 
-
+ */
 -- Final answer.
 INSERT INTO q2 
 	-- put a final query here so that its results will go into the table.
-	select username, avg(mark), max(mark)-min(mark)
-	from softer natural join MarkusUser
-	group by username;
+	select * from ans;

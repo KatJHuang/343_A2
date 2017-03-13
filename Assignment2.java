@@ -192,7 +192,7 @@ public class Assignment2 {
 
 			//check assignment and group
 			q = "select assignment_id, group_id from"+
-			" Assignment natural join AssignmentGroup natural join Membership"+
+			" (Assignment natural join AssignmentGroup) natural full join Membership"+
 			" group by group_id, assignment_id having count(username) < group_max;";
 			pS = connection.prepareStatement(q);
 			rs = pS.executeQuery();
