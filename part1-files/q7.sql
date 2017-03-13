@@ -10,10 +10,53 @@ CREATE TABLE q7 (
 
 -- You may find it convenient to do this for each of the views
 -- that define your intermediate steps.  (But give them better names!)
-DROP VIEW IF EXISTS intermediate_step CASCADE;
+DROP VIEW IF EXISTS all_grader CASCADE;
+DROP VIEW IF EXISTS grader_not_1cond CASCADE;
+DROP VIEW IF EXISTS grader_1cond CASCADE;
+DROP VIEW IF EXISTS total_students CASCADE;
+DROP VIEW IF EXISTS grader_2cond CASCADE;
+
 
 -- Define views for your intermediate steps here.
+
+--All graders
+create view all_grader as
+select username 
+from MarkusUser where type != 'student';
+
+--get the exist grader and assignment pair
+create view exist_grader_assg as
+select distinct username, assignment_id
+from AssignmentGroup natural join Grader;
+
+--get all possible grader and assi pair
+create view all_p_grader_assg as
+select distinct username, assignment_id
+from Assignment cross join all_grader;
+
+--grader at least one group each assignment
+create view grader_not_1cond as
+(select * from all_p_grader_assg) 
+except (select * from exist_grader_assg);
+
+create view grader_1cond as 
+select * from all_grader EXCEPT
+select username from grader_not_1cond;
+
+--grader marked all students
+--total number of students
+create view total_students as
+select count(distinct username) as num_stu
+from Membership;
+
+create view grader_2cond as
+select Grader.username as username
+from (Grader join Membership on Grader.group_id = Membership.group_id) 
+group by Grader.username having 
+count(distinct Membership.username) = (select * from total_students);
 
 -- Final answer.
 INSERT INTO q7 
 	-- put a final query here so that its results will go into the table.
+select * from grader_1cond intersect select * from grader_2cond;
+	

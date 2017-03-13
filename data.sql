@@ -50,9 +50,9 @@ INSERT INTO MarkusUser VALUES ('t3', 'tln3', 'tln3', 'TA');
 INSERT INTO MarkusUser VALUES ('t4', 'tln4', 'tln4', 'TA');
 
 -- assn id, descp, due, min, max
-INSERT INTO Assignment VALUES (1, 'a1', '2017-01-08 20:00', 1, 2); --
-INSERT INTO Assignment VALUES (2, 'a2', '2017-02-08 20:00', 1, 2);
-INSERT INTO Assignment VALUES (3, 'a3', '2017-03-08 20:00', 1, 2);
+INSERT INTO Assignment VALUES (1, 'A1', '2017-01-08 20:00', 1, 2); --
+INSERT INTO Assignment VALUES (2, 'A2', '2017-02-08 20:00', 1, 2);
+INSERT INTO Assignment VALUES (3, 'A3', '2017-03-08 20:00', 1, 2);
 --INSERT INTO Assignment VALUES (4, 'a4', '2017-04-08 20:00', 1, 2);
 --INSERT INTO Assignment VALUES (5, 'a5', '2017-05-08 20:00', 1, 2);
 --INSERT INTO Assignment VALUES (6, 'a6', '2017-05-08 20:00', 1, 2);
@@ -87,7 +87,21 @@ INSERT INTO AssignmentGroup (assignment_id,repo) VALUES
 (2, 'repo_url'),--23
 (2, 'repo_url'),--24
 (2, 'repo_url'),--25
-(2, 'repo_url')--26
+(2, 'repo_url'),--26
+(1, 'repo_url'),--27
+(2, 'repo_url'),--28
+(3, 'repo_url'),--29
+(1, 'repo_url'),--30
+(2, 'repo_url'),--31
+(1, 'repo_url'),--32
+(2, 'repo_url'),--33
+(1, 'repo_url'),--34
+(2, 'repo_url'),--35
+(3, 'repo_url'),--36
+(3, 'repo_url'),--37
+(3, 'repo_url'),--38
+(3, 'repo_url'),--39
+(3, 'repo_url')--40
 ;
 
 -- student, group
@@ -117,18 +131,58 @@ INSERT INTO Membership VALUES
 ('W',20),
 ('X',21),
 ('Y',22),
-('Z',23),
+('Z',22),
 ('Z',24),
-('Z',25);
+('Z',25),
+('Z',26),
+('A',26),
+('Z',27),
+('A',27),
+('Z',28),
+('A',28),
+('Z',29),
+('A',29),
+('Z',30),
+('A',30),
+('Z',31),
+('A',31),
+('Z',32),
+('A',32),
+('Z',33),
+('A',33),
+('Z',34),
+('A',34),
+('Z',35),
+('A',35),
+('Z',36),
+('A',36),
+('Z',37),
+('A',37),
+('Z',38),
+('A',38),
+('Z',39),
+('A',39),
+('Z',40),
+('A',40);
+
 
 -- sub id, group id
-INSERT INTO Submissions VALUES (11, 'A1.pdf', 'A', 1, '2017-02-08 19:59');
-INSERT INTO Submissions VALUES (21, 'A1.pdf', 'B', 1, '2017-02-06 19:59');
-INSERT INTO Submissions VALUES (31, 'A1.pdf', 'A', 1, '2017-02-05 19:59');
-INSERT INTO Submissions VALUES (41, 'A1.pdf', 'B', 1, '2017-02-04 19:59');
-INSERT INTO Submissions VALUES (51, 'A1.pdf', 'A', 1, '2017-02-03 19:59');
-INSERT INTO Submissions VALUES (61, 'A1.pdf', 'C', 4, '2017-02-04 19:59');
-INSERT INTO Submissions VALUES (71, 'A1.pdf', 'D', 4, '2017-02-03 19:59');
+INSERT INTO Submissions VALUES 
+(11, 'A1.pdf', 'A', 1, '2017-02-08 19:59'),
+(21, 'A1.pdf', 'B', 1, '2017-02-06 19:59'),
+(31, 'A1.pdf', 'A', 1, '2017-02-05 19:59'),
+(41, 'A1.pdf', 'B', 1, '2017-02-04 19:59'),
+(51, 'A1.pdf', 'B', 1, '2017-02-03 19:59'),
+(61, 'A1.pdf', 'E', 4, '2017-02-04 19:59'),
+(71, 'A1.pdf', 'E', 4, '2017-02-03 19:59'),
+(81, 'A1.pdf', 'C', 2, '2017-02-04 19:59'),
+(91, 'A1.pdf', 'C', 2, '2017-02-04 20:59'),
+(101, 'A1.pdf', 'D', 3, '2017-02-04 19:59'),
+(111, 'A1x.pdf', 'D', 3, '2017-02-04 19:59'),
+(121, 'A1.pdf', 'F', 5, '2017-02-04 19:59'),
+(131, 'A1c.pdf', 'F', 5, '2017-02-04 19:59'),
+(141, 'A1.pdf', 'G', 6, '2017-02-04 19:59')
+;
 
 -- group id, username
 INSERT INTO Grader VALUES 
@@ -156,7 +210,22 @@ INSERT INTO Grader VALUES
 (22, 't1'),
 (23, 't2'),
 (24, 't2'),
-(25, 't3')
+(25, 't3'),
+(26, 't3'),
+(27, 't3'),
+(28, 't3'),
+(29, 't3'),
+(30, 't3'),
+(31, 't3'),
+(32, 't3'),
+(33, 't3'),
+(34, 't3'),
+(35, 't3'),
+(36, 't3'),
+(37, 't3'),
+(38, 't3'),
+(39, 't3'),
+(40, 't1')
 ;
 
 INSERT INTO RubricItem VALUES (4010, 1, 'style', 4, 0.25);

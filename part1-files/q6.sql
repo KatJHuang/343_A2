@@ -25,7 +25,7 @@ DROP VIEW IF EXISTS lastSubmission CASCADE;
 create view A1Submissions as
 	select assignment_id, group_id, username, file_name, submission_date
 	from Assignment natural join AssignmentGroup natural join Submissions
-	where description = 'a1';
+	where description = 'A1';
 
 create view first as
 	select group_id, min(submission_date) as submission_date
@@ -48,7 +48,10 @@ create view lastSubmission as
 -- Final answer.
 INSERT INTO q6 
 	-- put a final query here so that its results will go into the table.
-	select A1Submissions.group_id, f_file, first_sub, f_person, l_file, last_sub, l_person, last_sub-first_sub 
-	from A1Submissions join (firstSubmission natural join lastSubmission) on A1Submissions.submission_date = firstSubmission.first_sub 
-		and A1Submissions.group_id = firstSubmission.group_id;
+select distinct A1Submissions.group_id as group_id, f_file as first_file, first_sub as first_time,
+f_person as first_submitter, l_file as last_file, last_sub as last_time, l_person as last_submitter,
+last_sub-first_sub as elapsed_time
+from A1Submissions join (firstSubmission natural join lastSubmission)
+on A1Submissions.submission_date = firstSubmission.first_sub 
+and A1Submissions.group_id = firstSubmission.group_id;
 	
