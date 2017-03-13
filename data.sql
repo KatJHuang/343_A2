@@ -16,10 +16,33 @@ TRUNCATE TABLE MarkusUser CASCADE;
 
 INSERT INTO MarkusUser VALUES ('i1', 'iln1', 'ifn1', 'instructor');
 
-INSERT INTO MarkusUser VALUES ('A', 'sln1', 'sfn1', 'student');
-INSERT INTO MarkusUser VALUES ('B', 'sln2', 'sfn2', 'student'); --
-INSERT INTO MarkusUser VALUES ('C', 'sln3', 'sfn3', 'student');
-INSERT INTO MarkusUser VALUES ('D', 'sln4', 'sfn4', 'student'), ('E', 'sln4', 'sfn4', 'student'); --
+INSERT INTO MarkusUser VALUES 
+('A', 'sln1', 'sfn1', 'student'), 
+('B', 'sln2', 'sfn2', 'student'),
+('C', 'sln3', 'sfn3', 'student'),
+('D', 'sln4', 'sfn4', 'student'), 
+('E', 'sln4', 'sfn4', 'student'),
+('F', 'sln4', 'sfn4', 'student'),
+('G', 'sln4', 'sfn4', 'student'),
+('H', 'sln4', 'sfn4', 'student'),
+('I', 'sln4', 'sfn4', 'student'),
+('J', 'sln4', 'sfn4', 'student'),
+('K', 'sln4', 'sfn4', 'student'),
+('L', 'sln4', 'sfn4', 'student'),
+('M', 'sln4', 'sfn4', 'student'),
+('N', 'sln4', 'sfn4', 'student'),
+('O', 'sln4', 'sfn4', 'student'),
+('P', 'sln4', 'sfn4', 'student'),
+('Q', 'sln4', 'sfn4', 'student'),
+('R', 'sln4', 'sfn4', 'student'),
+('S', 'sln4', 'sfn4', 'student'),
+('T', 'sln4', 'sfn4', 'student'),
+('U', 'sln4', 'sfn4', 'student'),
+('V', 'sln4', 'sfn4', 'student'),
+('W', 'sln4', 'sfn4', 'student'),
+('X', 'sln4', 'sfn4', 'student'),
+('Y', 'sln4', 'sfn4', 'student'),
+('Z', 'sln4', 'sfn4', 'student');
 
 INSERT INTO MarkusUser VALUES ('t1', 'tln1', 'tfn1', 'TA');
 INSERT INTO MarkusUser VALUES ('t2', 'tln2', 'tln2', 'TA');
@@ -29,7 +52,7 @@ INSERT INTO MarkusUser VALUES ('t4', 'tln4', 'tln4', 'TA');
 -- assn id, descp, due, min, max
 INSERT INTO Assignment VALUES (1, 'a1', '2017-01-08 20:00', 1, 2); --
 INSERT INTO Assignment VALUES (2, 'a2', '2017-02-08 20:00', 1, 2);
---INSERT INTO Assignment VALUES (3, 'a3', '2017-03-08 20:00', 1, 2);
+INSERT INTO Assignment VALUES (3, 'a3', '2017-03-08 20:00', 1, 2);
 --INSERT INTO Assignment VALUES (4, 'a4', '2017-04-08 20:00', 1, 2);
 --INSERT INTO Assignment VALUES (5, 'a5', '2017-05-08 20:00', 1, 2);
 --INSERT INTO Assignment VALUES (6, 'a6', '2017-05-08 20:00', 1, 2);
@@ -39,36 +62,64 @@ INSERT INTO Required VALUES (1, 'A1.pdf');
 -- group id, assignment id
 select setval('AssignmentGroup_group_id_seq', 1,false);
 INSERT INTO AssignmentGroup (assignment_id,repo) VALUES 
-(1, 'repo_url'),
-(1, 'repo_url'),
-(1, 'repo_url'),
-(1, 'repo_url'),
-(1, 'repo_url'),
-(1, 'repo_url'),
-(1, 'repo_url'),
-(1, 'repo_url'),
-(1, 'repo_url'),
-(1, 'repo_url'),
-(2, 'repo_url'),
-(2, 'repo_url'),
-(2, 'repo_url'),
-(2, 'repo_url'),
-(2, 'repo_url'),
-(2, 'repo_url'),
-(2, 'repo_url'),
-(2, 'repo_url'),
-(2, 'repo_url'),
-(2, 'repo_url'),
-(2, 'repo_url'),
-(2, 'repo_url'),
-(2, 'repo_url'),
-(2, 'repo_url'),
-(2, 'repo_url'),
-(2, 'repo_url')
+(1, 'repo_url'),--1
+(1, 'repo_url'),--2
+(1, 'repo_url'),--3
+(1, 'repo_url'),--4
+(1, 'repo_url'),--5
+(1, 'repo_url'),--6
+(1, 'repo_url'),--7
+(1, 'repo_url'),--8
+(1, 'repo_url'),--9
+(1, 'repo_url'),--10
+(2, 'repo_url'),--11
+(2, 'repo_url'),--12
+(2, 'repo_url'),--13
+(2, 'repo_url'),--14
+(2, 'repo_url'),--15
+(2, 'repo_url'),--16
+(2, 'repo_url'),--17
+(2, 'repo_url'),--18
+(2, 'repo_url'),--19
+(2, 'repo_url'),--20
+(2, 'repo_url'),--21
+(2, 'repo_url'),--22
+(2, 'repo_url'),--23
+(2, 'repo_url'),--24
+(2, 'repo_url'),--25
+(2, 'repo_url')--26
 ;
 
 -- student, group
-INSERT INTO Membership VALUES ('A', 1),('B',1),('C',2),('D',3),('E',4);
+INSERT INTO Membership VALUES 
+('A',1),
+('B',1),
+('C',2),
+('D',3),
+('E',4),
+('F',5),
+('G',6),
+('H',7),
+('I',8),
+('J',9),
+('K',10),
+('L',11),
+('M',12),
+('N',13),
+('O',14),
+('P',14),
+('Q',15),
+('R',15),
+('S',16),
+('T',17),
+('U',18),
+('V',19),
+('W',20),
+('X',21),
+('Y',22),
+('Z',23),
+('Z',24),
+('Z',25);
 
 -- sub id, group id
 INSERT INTO Submissions VALUES (11, 'A1.pdf', 'A', 1, '2017-02-08 19:59');
@@ -101,11 +152,11 @@ INSERT INTO Grader VALUES
 (18, 't1'),
 (19, 't1'),
 (20, 't1'),
-(21, 't2'),
-(22, 't2'),
+(21, 't1'),
+(22, 't1'),
 (23, 't2'),
 (24, 't2'),
-(25, 't2')
+(25, 't3')
 ;
 
 INSERT INTO RubricItem VALUES (4010, 1, 'style', 4, 0.25);
