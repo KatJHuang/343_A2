@@ -12,6 +12,8 @@ CREATE TABLE q8 (
 
 -- You may find it convenient to do this for each of the views
 -- that define your intermediate steps.  (But give them better names!)
+DROP VIEW IF EXISTS assignment_outof CASCADE;
+DROP VIEW IF EXISTS real_grade CASCADE;
 DROP VIEW IF EXISTS groupAssignment CASCADE;
 DROP VIEW IF EXISTS soloAssignment CASCADE;
 DROP VIEW IF EXISTS groups CASCADE;
@@ -19,7 +21,8 @@ DROP VIEW IF EXISTS membersInGroupAssignments CASCADE;
 DROP VIEW IF EXISTS groupAllTheWay CASCADE;
 DROP VIEW IF EXISTS hardWorkersAndWork CASCADE;
 DROP VIEW IF EXISTS hardWorkders CASCADE;
-DROP VIEW IF EXISTS groups CASCADE;
+DROP VIEW IF EXISTS group_average CASCADE;
+DROP VIEW IF EXISTS solo_average CASCADE;
 
 -- Define views for your intermediate steps here.
 
@@ -61,19 +64,19 @@ create view membersInGroupAssignments as
 	select group_id, assignment_id, username
 	from groups natural join Membership natural join AssignmentGroup natural join groupAssignment;
 
-	-- 
+-- 
 create view groupAllTheWay as 
 	select username 
 	from membersInGroupAssignments
 	group by username
 	having count(group_id) >= (select count(distinct assignment_id) from membersInGroupAssignments);
 
--- find students who submitted in those assignments
+-- find students who submitted in all those assignments
 create view hardWorkersAndWork as
-	select username, group_id, assignment_id
-	from submissions natural join membersInGroupAssignments natural join groupAllTheWay
-	group by username, group_id, assignment_id
-	having count(submission_id) > 0;
+	select username, group_id
+	from submissions natural join groupAllTheWay
+	group by username
+	having count(submission_id) >= (select count(distinct assignment_id) from AssignmentGroup);
 
 
 -- find the usernames who never worked solo on an assignment 
