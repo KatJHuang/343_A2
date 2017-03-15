@@ -79,7 +79,7 @@ create view hardWorkers as -- buggy
 	select distinct username
 	from submissions natural join groupAllTheWay
 	group by username
-	having count(submission_id) >= (select count(distinct assignment_id) from AssignmentGroup);
+	having count(group_id) >= (select count(distinct assignment_id) from AssignmentGroup);
 
 -- find average mark of groupy people across all group assignments
 create view group_average as
