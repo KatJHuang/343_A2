@@ -36,8 +36,12 @@ create view A1Groups as
 	from AssignmentGroup natural join Assignment natural full join real_grade
 	where description = 'A1';
 
+create view A1Avg as
+	select avg(r_grade) as average
+	from A1Groups;
+
 -- Final answer.
 INSERT INTO q10
-	select group_id, r_grade, r_grade - avg(r_grade), 'above'
+	select group_id, r_grade, r_grade - (select average from A1Avg), 'above'
 	from A1Groups;
 	-- put a final query here so that its results will go into the table.
