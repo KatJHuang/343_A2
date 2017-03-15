@@ -72,19 +72,14 @@ create view groupAllTheWay as
 	having count(group_id) >= (select count(distinct assignment_id) from membersInGroupAssignments);
 
 -- find students who submitted in all those assignments
-create view hardWorkersAndWork as
-	select username, group_id
-	from submissions natural join groupAllTheWay
-	group by username
-	having count(submission_id) >= (select count(distinct assignment_id) from AssignmentGroup);
-
-
 -- find the usernames who never worked solo on an assignment 
 -- that allows groups, and who submitted at least one
 -- file for every assignment
-create view hardWorkers as
+create view hardWorkers as -- buggy
 	select distinct username
-	from hardWorkersAndWork;
+	from submissions natural join groupAllTheWay
+	group by username
+	having count(submission_id) >= (select count(distinct assignment_id) from AssignmentGroup);
 
 -- find average mark of groupy people across all group assignments
 create view group_average as
@@ -97,8 +92,6 @@ create view solo_average as
 	select username, avg(r_grade) as solo_avg
 	from real_grade natural join hardWorkers natural join soloAssignment
 	group by username;
-
-
 
 -- Final answer.
 INSERT INTO q8
