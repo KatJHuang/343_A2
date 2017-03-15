@@ -13,10 +13,31 @@ CREATE TABLE q10 (
 
 -- You may find it convenient to do this for each of the views
 -- that define your intermediate steps.  (But give them better names!)
-DROP VIEW IF EXISTS intermediate_step CASCADE;
+DROP VIEW IF EXISTS A1Groups CASCADE;
 
 -- Define views for your intermediate steps here.
+-- ======================================================================
+-- concerning the assignment percentages for <group, assignment>
+DROP VIEW IF EXISTS assignment_outof CASCADE;
+DROP VIEW IF EXISTS real_grade CASCADE;
+
+create view assignment_outof as
+	select assignment_id, sum(out_of * weight) as assignment_outof
+	from RubricItem group by assignment_id;
+
+create view real_grade as 
+	select assignment_id, group_id, mark * 100/assignment_outof as r_grade
+	from AssignmentGroup natural join assignment_outof natural join Result;
+
+-- ======================================================================
+
+create view A1Groups as
+	select group_id, r_grade
+	from AssignmentGroup natural join Assignment natural full join real_grade
+	where description = 'A1';
 
 -- Final answer.
 INSERT INTO q10
+	select group_id, r_grade, r_grade - avg(r_grade), 'above'
+	from A1Groups;
 	-- put a final query here so that its results will go into the table.
