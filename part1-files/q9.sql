@@ -17,7 +17,7 @@ DROP VIEW IF EXISTS inseparable CASCADE;
 
 -- Define views for your intermediate steps here.
 create view possiblePairing as
-	select m1.username as s1, m2.username as s2
+	select distinct m1.username as s1, m2.username as s2
 	from membership as m1, membership as m2
 	where m1.group_id = m2.group_id and m1.username < m2.username;
 
@@ -31,7 +31,7 @@ create view inseparable as
 	select * 
 	from possiblePairing
 	group by s1, s2
-	having count(*) > (select num_of_assignments from allowsGroup);
+	having count(*) = (select num_of_assignments from allowsGroup);
 
 -- Final answer.
 INSERT INTO q9 
