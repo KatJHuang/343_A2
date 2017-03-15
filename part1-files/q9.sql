@@ -31,7 +31,7 @@ create view inseparable as
 	select * 
 	from possiblePairing
 	group by s1, s2
-	having count(*) > allowsGroup.num_of_assignments;
+	having count(*) > (select num_of_assignments from allowsGroup);
 
 -- Final answer.
 INSERT INTO q9 
