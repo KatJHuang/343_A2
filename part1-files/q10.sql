@@ -43,7 +43,9 @@ create view A1Avg as
 -- Final answer.
 INSERT INTO q10
 	select group_id, r_grade, 
-		r_grade - (select average from A1Avg) as diff, 
-		case when diff > 0 then 'above' when diff = 0 then 'at' when diff < 0 then 'below' end
+		r_grade - (select average from A1Avg), 
+		case when r_grade - (select average from A1Avg) > 0 then 'above' 
+			when r_grade - (select average from A1Avg) = 0 then 'at' 
+			when r_grade - (select average from A1Avg) < 0 then 'below' end
 	from A1Groups;
 	-- put a final query here so that its results will go into the table.
