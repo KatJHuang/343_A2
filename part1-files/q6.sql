@@ -19,23 +19,32 @@ CREATE TABLE q6 (
 -- that define your intermediate steps.  (But give them better names!)
 DROP VIEW IF EXISTS A1Submissions CASCADE;
 DROP VIEW IF EXISTS firstSubmission CASCADE;
+DROP VIEW IF EXISTS first CASCADE;
+DROP VIEW IF EXISTS last CASCADE;
 DROP VIEW IF EXISTS lastSubmission CASCADE;
 
 -- Define views for your intermediate steps here.
+-- get all submissions in A1 
+-- find which groups are for A1,
+-- who's in it,
+-- and when something version of A1 is submitted
 create view A1Submissions as
 	select assignment_id, group_id, username, file_name, submission_date
 	from (Assignment natural join AssignmentGroup) natural full join Submissions
 	where description = 'A1';
 
+-- for each group, find the earliest A1 submission time
 create view first as
 	select group_id, min(submission_date) as submission_date
 	from A1Submissions
 	group by group_id;
 
+-- join back to find who's the submitter and file name
 create view firstSubmission as 
 	select group_id, file_name as f_file, username as f_person, submission_date as first_sub
 	from A1Submissions natural join first;
 
+-- same as above but for the last submission
 create view last as
 	select group_id, max(submission_date) as submission_date
 	from A1Submissions

@@ -81,13 +81,13 @@ create view hardWorkers as
 	group by username
 	having count(distinct group_id) >= (select count(distinct assignment_id) from AssignmentGroup);
 
--- find average mark of groupy people across all group assignments
+-- find average mark of group-inclining people across all group assignments
 create view group_average as
 	select username, avg(r_grade) as group_avg
 	from real_grade natural join hardWorkers natural join groupAssignment
 	group by username;
 
--- find average mark of groupy people across all group assignments
+-- find average mark of group-inclining people across all solo assignments
 create view solo_average as
 	select username, avg(r_grade) as solo_avg
 	from real_grade natural join hardWorkers natural join soloAssignment

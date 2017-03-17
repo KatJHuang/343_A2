@@ -26,9 +26,12 @@ DROP VIEW IF EXISTS all_assignments CASCADE;
 DROP VIEW IF EXISTS assignment_outof CASCADE;
 -- Define views for your intermediate steps here.
 
+-- get a list of assignment ids 
 create view all_assignments as
 select assignment_id from Assignment;
 
+
+-- for calulating marks
 create view assignment_outof as
 select assignment_id, sum(out_of * weight) as assignment_outof
 from RubricItem group by assignment_id;
@@ -45,25 +48,26 @@ select assignment_id, sum(r_grade) as assignment_total
 from real_grade 
 group by assignment_id;
 
--- find the number of groups for each assignment
+-- find the number of groups in each assignment
 create view group_count_per_assignment as 
 select assignment_id, count(distinct group_id) as group_count 
 from real_grade 
 group by assignment_id;
 
--- find average_mark_percent for each assignment
+-- find average_mark_percent in each assignment
 -- *******this is one answer************
 create view assignment_avg_grade as
 select assignment_id, (assignment_total/group_count) as average_mark_percent 
 from real_sum_grade natural join group_count_per_assignment;
 -- ***************************************************
 
--- find the percentage mark for each group on each assignment
+-- find the percentage mark in each group on each assignment
 create view real_grade_each_group as
 select assignment_id, group_id, sum(r_grade) as assignment_percent
 from real_grade
 group by assignment_id, group_id;
 
+-- count them!
 create view number_80to100 as
 select assignment_id, count(*) as number_80_100
 from real_grade_each_group

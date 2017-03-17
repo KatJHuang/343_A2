@@ -25,6 +25,7 @@ create view assignment_outof as
 	select assignment_id, sum(out_of * weight) as assignment_outof
 	from RubricItem group by assignment_id;
 
+-- for each assignment and groups who are in this assignment, find the percentage mark
 create view real_grade as 
 	select assignment_id, group_id, mark * 100/assignment_outof as r_grade
 	from AssignmentGroup natural join assignment_outof natural join Result;

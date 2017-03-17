@@ -19,36 +19,37 @@ DROP VIEW IF EXISTS grader_2cond CASCADE;
 
 -- Define views for your intermediate steps here.
 
---All graders
+--pick out usernames of graders
 create view all_grader as
 select username 
 from MarkusUser where type != 'student';
 
---get the exist grader and assignment pair
+--get the actually existing <grader, assignment> pairs
 create view exist_grader_assg as
 select distinct username, assignment_id
 from AssignmentGroup natural join Grader;
 
---get all possible grader and assi pair
+--get all possible grader and assignment pairs
 create view all_p_grader_assg as
 select distinct username, assignment_id
 from Assignment cross join all_grader;
 
---grader at least one group each assignment
+-- graders not satisfying the first condition
 create view grader_not_1cond as
 (select * from all_p_grader_assg) 
 except (select * from exist_grader_assg);
 
+-- filtering out those who didn't grade all assignments and leaving graders satisfying the first condition
 create view grader_1cond as 
 select * from all_grader EXCEPT
 select username from grader_not_1cond;
 
---grader marked all students
 --total number of students
 create view total_students as
 select count(distinct username) as num_stu
 from Membership;
 
+-- find grader (username) who marked all students
 create view grader_2cond as
 select Grader.username as username
 from (Grader join Membership on Grader.group_id = Membership.group_id) 

@@ -16,12 +16,13 @@ DROP VIEW IF EXISTS num_groups_per_grader CASCADE;
 DROP VIEW IF EXISTS uneven_assg CASCADE;
 
 -- Define views for your intermediate steps here.
-
+-- for each grader and assignments to which they've assigned, find number of groups they graded in those assignments
 create view num_groups_per_grader as
 select assignment_id, username, count(group_id) as num_assigned
 from AssignmentGroup natural join Grader
 group by assignment_id, username;
 
+-- pick out those assignment for which TAs had uneven workload
 create view uneven_assg as
 select assignment_id
 from num_groups_per_grader 

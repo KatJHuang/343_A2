@@ -27,6 +27,7 @@ DROP VIEW IF EXISTS col_avg CASCADE;
 DROP VIEW IF EXISTS assg_num_students CASCADE;
 DROP VIEW IF EXISTS assg_num_groups CASCADE;
 DROP VIEW IF EXISTS assg_num_per_group CASCADE;
+
 -- Define views for your intermediate steps here.
 
 --first get a list of all grades
@@ -34,54 +35,57 @@ create view assignment_outof as
 select assignment_id, sum(out_of * weight) as assignment_outof
 from RubricItem group by assignment_id;
 
+-- for each assignment and groups who are in this assignment, find the percentage mark
 create view real_grade as 
 select assignment_id, group_id, mark * 100/assignment_outof as r_grade
 from AssignmentGroup natural join assignment_outof natural join Result;
 
---list all groups work alone
+
+--list all groups that contain peope who work alone
 create view solo_group as
 select group_id from Membership
 group by group_id having count(username) = 1;
 
---list all groups have at least 2 people
+--list all groups that have at least 2 people
 create view col_group as
 select group_id from Membership
 group by group_id having count(username) >1;
 
---get the num_solo
+-- for each assignment, get the num of solo-ers
 --*******************************************
 create view solo_num as
 select assignment_id, count(group_id) as num_solo
 from solo_group natural join AssignmentGroup
 group by assignment_id;
 
---get the num_collaborators
+--for each assignment, get the number of students who did it in groups
 --*******************************************
 create view col_num as
 select assignment_id, count(username) as num_collaborators
 from col_group natural join AssignmentGroup natural join Membership
 group by assignment_id;
 
---get the average_solo
+--get the average_solo per assignment
 --*******************************************
 create view solo_avg as
 select assignment_id, avg(r_grade) as average_solo
 from solo_group natural join real_grade
 group by assignment_id;
 
---get the average_collaborators
+--get the average of people in groups per assignment
 --*******************************************
 create view col_avg as
 select assignment_id, avg(r_grade) as average_collaborators
 from col_group natural join real_grade
 group by assignment_id;
 
---get the average number of students per group of an assignment_id
+--for each assignment, get the average number of students per group 
 create view assg_num_students as
 select assignment_id, count(username) as us_count
 from AssignmentGroup natural join Membership
 group by assignment_id;
 
+-- for each assignment, count number of groups
 create view assg_num_groups as
 select assignment_id, count(group_id) as gp_count
 from AssignmentGroup group by assignment_id;
