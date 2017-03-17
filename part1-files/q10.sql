@@ -30,12 +30,13 @@ create view real_grade as
 	from AssignmentGroup natural join assignment_outof natural join Result;
 
 -- ======================================================================
-
+-- find groups and the marks they get in assignment 1; marks will be null if not available
 create view A1Groups as
 	select group_id, r_grade
 	from AssignmentGroup natural join Assignment natural full join real_grade
 	where description = 'A1';
 
+-- find the average mark in A1
 create view A1Avg as
 	select avg(r_grade) as average
 	from A1Groups;

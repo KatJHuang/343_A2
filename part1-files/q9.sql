@@ -16,6 +16,7 @@ DROP VIEW IF EXISTS allowsGroup CASCADE;
 DROP VIEW IF EXISTS inseparable CASCADE;
 
 -- Define views for your intermediate steps here.
+-- get all student pairs <s1, s2> that have already occurred
 create view possiblePairing as
 	select m1.username as s1, m2.username as s2
 	from membership as m1, membership as m2
@@ -27,6 +28,7 @@ create view allowsGroup as
 	from Assignment natural join AssignmentGroup
 	where group_max > 1;
 
+-- find inseparable pairs by checking their appearances against total number of group allowing assignments
 create view inseparable as
 	select distinct s1, s2 
 	from possiblePairing
